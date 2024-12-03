@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Products</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <h1 id="head">See more deatails of Products.</h1>
+
+    <div id="oneCard">
+
+    </div>
+
+    <div id="reviews">
+
+    </div>
+ 
+    <script>
+        // console.log("Hello single card !");
+
+        let newProduct = localStorage.getItem("id");
+        console.log(newProduct);
+
+        let div = document.querySelector("#oneCard");
+        let review = document.querySelector("#reviews");
+
+        fetch(`https://dummyjson.com/products/${newProduct}`)
+
+        .then(res => res.json())
+
+        .then((res) => {
+            console.log(res);
+
+            div.innerHTML += `
+            
+            <div class="result-card">
+
+            <div class="p-right">
+                <img src="${res.thumbnail}" width="100%">    
+            </div>
+            <div>
+            <h1 id="b-bottom"><span class="bg-black">Product :</span> ${res.title}</h1>
+            <h2><span class="bg-black">Category :</span> ${res.category}</h2>
+            <h4><span class="bg-black">Stocks :</span> ${res.stock}</h4>
+            <h4><span class="bg-black">Weight :</span> ${res.weight}</h4>
+            <p>${res.description}</p>
+            <h2 class="bg-red">${res.warrantyInformation}</h2>
+            <h3 class="bg-green">Price : $${res.price}</h3>
+            
+            <button class="order-btn" onclick="order()">Order Now</button>
+    
+            </div>
+            </div>
+            `    
+        })
+
+        .catch(error => {
+            console.log(error);
+            
+        })
+
+        function order() {
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be order this item ?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, order now !"
+            })
+        .then((result) => {
+    
+        if (result.isConfirmed) {
+             Swal.fire({
+            title: "Thanks For Shopping!",
+            text: "Successfully you Ordered your item.",
+            icon: "success"
+    });
+   }
+});
+
+}
+    </script>
+
+        <div class="anchor">        
+            <a href="./index.html">Go Back Home Page...</a>
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+</html>
